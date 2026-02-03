@@ -447,6 +447,12 @@ def _auto_detect_configs(api_keys: Optional[Dict[str, str]] = None) -> Dict[str,
             return bool(api_keys.get(key_name))
         return bool(os.getenv(key_name))
 
+    def get_key(key_name: str) -> Optional[str]:
+        """获取 API key，优先使用 api_keys 参数，否则从环境变量读取"""
+        if api_keys:
+            return api_keys.get(key_name)
+        return os.getenv(key_name)
+
     has_anthropic = has_key("ANTHROPIC_API_KEY")
     has_openai = has_key("OPENAI_API_KEY")
     has_deepseek = has_key("DEEPSEEK_API_KEY")
@@ -458,63 +464,63 @@ def _auto_detect_configs(api_keys: Optional[Dict[str, str]] = None) -> Dict[str,
 
     # Expert: 优先Claude > DeepSeek > GPT-4 > Qwen
     if has_anthropic:
-        configs["expert"] = AgentConfig(provider="anthropic", model="claude-sonnet-4-5")
+        configs["expert"] = AgentConfig(provider="anthropic", model="claude-sonnet-4-5", api_key=get_key("ANTHROPIC_API_KEY"))
     elif has_deepseek:
-        configs["expert"] = AgentConfig(provider="deepseek", model="deepseek-chat")
+        configs["expert"] = AgentConfig(provider="deepseek", model="deepseek-chat", api_key=get_key("DEEPSEEK_API_KEY"))
     elif has_openai:
-        configs["expert"] = AgentConfig(provider="openai", model="gpt-4o")
+        configs["expert"] = AgentConfig(provider="openai", model="gpt-4o", api_key=get_key("OPENAI_API_KEY"))
     elif has_dashscope:
-        configs["expert"] = AgentConfig(provider="dashscope", model="qwen-max")
+        configs["expert"] = AgentConfig(provider="dashscope", model="qwen-max", api_key=get_key("DASHSCOPE_API_KEY"))
     else:
         configs["expert"] = AgentConfig(provider="ollama", model="llama3.3")
 
     # Auditor: 优先DeepSeek (性价比) > Qwen > GPT-4
     if has_deepseek:
-        configs["auditor"] = AgentConfig(provider="deepseek", model="deepseek-chat")
+        configs["auditor"] = AgentConfig(provider="deepseek", model="deepseek-chat", api_key=get_key("DEEPSEEK_API_KEY"))
     elif has_dashscope:
-        configs["auditor"] = AgentConfig(provider="dashscope", model="deepseek-v3.2")
+        configs["auditor"] = AgentConfig(provider="dashscope", model="deepseek-v3.2", api_key=get_key("DASHSCOPE_API_KEY"))
     elif has_openai:
-        configs["auditor"] = AgentConfig(provider="openai", model="gpt-4o-mini")
+        configs["auditor"] = AgentConfig(provider="openai", model="gpt-4o-mini", api_key=get_key("OPENAI_API_KEY"))
     else:
         configs["auditor"] = configs["expert"]
 
     # Analyst: 优先Qwen (中文好) > GPT-4 > DeepSeek
     if has_dashscope:
-        configs["analyst"] = AgentConfig(provider="dashscope", model="qwen-max")
+        configs["analyst"] = AgentConfig(provider="dashscope", model="qwen-max", api_key=get_key("DASHSCOPE_API_KEY"))
     elif has_openai:
-        configs["analyst"] = AgentConfig(provider="openai", model="gpt-4o")
+        configs["analyst"] = AgentConfig(provider="openai", model="gpt-4o", api_key=get_key("OPENAI_API_KEY"))
     elif has_deepseek:
-        configs["analyst"] = AgentConfig(provider="deepseek", model="deepseek-chat")
+        configs["analyst"] = AgentConfig(provider="deepseek", model="deepseek-chat", api_key=get_key("DEEPSEEK_API_KEY"))
     else:
         configs["analyst"] = configs["expert"]
 
     # Manager: 优先GPT-4 (报告生成好) > Claude > Qwen
     if has_openai:
-        configs["manager"] = AgentConfig(provider="openai", model="gpt-4o")
+        configs["manager"] = AgentConfig(provider="openai", model="gpt-4o", api_key=get_key("OPENAI_API_KEY"))
     elif has_anthropic:
-        configs["manager"] = AgentConfig(provider="anthropic", model="claude-sonnet-4-5")
+        configs["manager"] = AgentConfig(provider="anthropic", model="claude-sonnet-4-5", api_key=get_key("ANTHROPIC_API_KEY"))
     elif has_dashscope:
-        configs["manager"] = AgentConfig(provider="dashscope", model="qwen-max")
+        configs["manager"] = AgentConfig(provider="dashscope", model="qwen-max", api_key=get_key("DASHSCOPE_API_KEY"))
     else:
         configs["manager"] = configs["expert"]
 
     # WhiteHat: 优先GLM (128K输出) > DeepSeek > Claude
     if has_zhipu:
-        configs["white_hat"] = AgentConfig(provider="zhipu", model="glm-4.6", max_tokens=131072)
+        configs["white_hat"] = AgentConfig(provider="zhipu", model="glm-4.6", max_tokens=131072, api_key=get_key("ZHIPU_API_KEY"))
     elif has_deepseek:
-        configs["white_hat"] = AgentConfig(provider="deepseek", model="deepseek-chat")
+        configs["white_hat"] = AgentConfig(provider="deepseek", model="deepseek-chat", api_key=get_key("DEEPSEEK_API_KEY"))
     elif has_anthropic:
-        configs["white_hat"] = AgentConfig(provider="anthropic", model="claude-sonnet-4-5")
+        configs["white_hat"] = AgentConfig(provider="anthropic", model="claude-sonnet-4-5", api_key=get_key("ANTHROPIC_API_KEY"))
     else:
         configs["white_hat"] = configs["expert"]
 
     # Review: 优先DashScope/qwen-plus (高并发、中文好) > DeepSeek > Claude
     if has_dashscope:
-        configs["review"] = AgentConfig(provider="dashscope", model="qwen-plus", max_tokens=32768)
+        configs["review"] = AgentConfig(provider="dashscope", model="qwen-plus", max_tokens=32768, api_key=get_key("DASHSCOPE_API_KEY"))
     elif has_deepseek:
-        configs["review"] = AgentConfig(provider="deepseek", model="deepseek-chat")
+        configs["review"] = AgentConfig(provider="deepseek", model="deepseek-chat", api_key=get_key("DEEPSEEK_API_KEY"))
     elif has_anthropic:
-        configs["review"] = AgentConfig(provider="anthropic", model="claude-sonnet-4-5")
+        configs["review"] = AgentConfig(provider="anthropic", model="claude-sonnet-4-5", api_key=get_key("ANTHROPIC_API_KEY"))
     else:
         configs["review"] = configs["expert"]
 
