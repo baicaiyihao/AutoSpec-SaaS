@@ -71,8 +71,8 @@ fi
 
 # 初始化数据库
 echo -e "\n${GREEN}[6/7]${NC} 初始化数据库..."
-python3 scripts/migrate.py
-echo -e "✅ 数据库迁移完成"
+python3 scripts/init_database.py
+echo -e "✅ 数据库初始化完成"
 
 # 种子数据（Sui 配置）
 echo -e "\n${GREEN}[7/7]${NC} 初始化系统配置..."

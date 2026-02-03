@@ -52,4 +52,4 @@ bcrypt==4.0.1                 # 固定版本 (5.x 与 passlib 不兼容)
 cryptography                  # API Key 加密 (Fernet)
 PyNaCl                        # Ed25519 签名验证（Sui 钱包）
 captcha                       # 图形验证码生成
-Pillow                        # 图像处理
+Pillow                        # 图像处理greenlet>=3.0.0
