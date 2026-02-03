@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定义样式 */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 严重性标签样式 */
+.severity-critical {
+  @apply bg-red-500 text-white;
+}
+.severity-high {
+  @apply bg-orange-500 text-white;
+}
+.severity-medium {
+  @apply bg-yellow-500 text-black;
+}
+.severity-low {
+  @apply bg-green-500 text-white;
+}
+.severity-advisory {
+  @apply bg-blue-500 text-white;
+}
+
+/* 代码高亮容器 */
+.code-block {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm;
+}
+
+/* 日志容器 */
+.log-container {
+  @apply bg-gray-900 text-green-400 p-4 rounded-lg overflow-y-auto font-mono text-xs;
+  max-height: 400px;
+}
+
+/* 进度条动画 */
+@keyframes progress-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.progress-active {
+  animation: progress-pulse 1.5s ease-in-out infinite;
+}
+
+/* 禁用 Sider 宽度变化动画（拖拽调节需要即时响应） */
+.no-transition,
+.no-transition * {
+  transition: none !important;
+}
+
+/* 可拖拽分隔条 */
+.resize-handle {
+  width: 4px;
+  cursor: col-resize;
+  background-color: transparent;
+  transition: background-color 0.2s;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+}
+.resize-handle:hover,
+.resize-handle:active {
+  background-color: #1677ff;
+}
+
+/* 报告页标签样式 */
+.report-page-tabs .ant-tabs-nav {
+  margin-bottom: 0 !important;
+}
+.report-page-tabs .ant-tabs-nav::before {
+  border-bottom: none !important;
+}

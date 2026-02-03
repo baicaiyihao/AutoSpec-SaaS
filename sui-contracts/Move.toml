@@ -1,0 +1,17 @@
+[package]
+name = "AutoSpecTokenPurchase"
+version = "1.0.0"
+edition = "2024.beta"
+
+[dependencies.Pyth]
+git = "https://github.com/pyth-network/pyth-crosschain.git"
+subdir = "target_chains/sui/contracts"
+rev = "sui-contract-testnet"
+
+[dependencies.Sui]
+git = "https://github.com/MystenLabs/sui.git"
+subdir = "crates/sui-framework/packages/sui-framework"
+rev = "041c5f2bae2fe52079e44b70514333532d69f4e6"
+
+[addresses]
+autospec = "0x0"

@@ -1,0 +1,55 @@
+# 核心框架
+langchain
+langchain-community
+langchain-core
+langchain-text-splitters
+langchain-openai
+
+# 向量数据库
+langchain-chroma
+chromadb
+
+# 大模型接口
+dashscope          # 阿里云 (Qwen, DeepSeek via DashScope)
+openai             # OpenAI (GPT-4) & DeepSeek (OpenAI兼容)
+anthropic          # Anthropic (Claude)
+google-genai       # Google (Gemini)
+zai-sdk            # 智谱AI (GLM-4.6, GLM-4.7)
+
+# 环境变量管理
+python-dotenv
+httpx[socks]
+
+# ===========================================
+# Web API 框架 (v2.6.0 WebUI)
+# ===========================================
+fastapi>=0.109
+uvicorn[standard]>=0.27
+python-multipart          # 文件上传支持
+
+# 数据库 ORM
+sqlalchemy>=2.0
+aiosqlite                 # SQLite 异步支持
+alembic                   # 数据库迁移工具
+slowapi                   # Rate limiting (防暴力破解)
+
+# 数据验证
+pydantic>=2.0
+pydantic-settings         # 配置管理
+
+# WebSocket
+websockets>=12.0
+
+# Sui 区块链 SDK
+pysui                         # Sui Python SDK（交易验证、事件监听）
+
+# ===========================================
+# 认证与安全 (v2.6.0 用户管理)
+# ===========================================
+python-jose[cryptography]     # JWT token
+passlib[bcrypt]               # 密码哈希
+bcrypt==4.0.1                 # 固定版本 (5.x 与 passlib 不兼容)
+cryptography                  # API Key 加密 (Fernet)
+PyNaCl                        # Ed25519 签名验证（Sui 钱包）
+captcha                       # 图形验证码生成
+Pillow                        # 图像处理

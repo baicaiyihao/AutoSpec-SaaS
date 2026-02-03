@@ -1,0 +1,42 @@
+{
+  "network": "testnet",
+  "deployed_at": "2026-02-02T16:04:00Z",
+  "package_id": "0x79dbd049711d5b450886c2bc9826743bc2916a04eae69f9b1fee3cc9258b3045",
+  "admin_cap_id": "0x8a235ea42ca064d476841020d610f4575d4f286351c39d4cae15c054483cf955",
+  "sui_pool_id": "0xbda8cd5f887d2b459cac7870f422b78b7fa4915167691fc9d0d8b38435ce3005",
+  "deployer_address": "0x90abb670800b4015229d30f5d010faef0c347e1d9650c9acebe2c012be7eb724",
+  "transaction_digest": "9dgPiUtxumpEr8HiSyNVRnm8vWvdzTqr6wpZmTVRo7j",
+  "gas_used": {
+    "storage_cost": 18544000,
+    "computation_cost": 1000000,
+    "total_cost": 18565880
+  },
+  "notes": {
+    "package_id": "合约包 ID - 前端调用时需要",
+    "admin_cap_id": "管理员权限对象 ID - 用于提现和管理",
+    "sui_pool_id": "SUI 收款池对象 ID - 用户充值时需要",
+    "clock_id": "0x6 - Sui 系统时钟对象（固定）"
+  },
+  "tests": {
+    "purchase_tokens": {
+      "status": "✅ PASSED",
+      "transaction": "GjwHcYFcn32F9Q2FMsheZHVvujV4XZyWxYeCF4jjCMGW",
+      "test_params": {
+        "sui_amount": 100000000,
+        "usd_amount": 30,
+        "token_amount": 30
+      },
+      "event_emitted": true,
+      "pool_received_sui": true
+    },
+    "withdraw_commission": {
+      "status": "✅ PASSED",
+      "transaction": "8STs6y9kMGQtXckRaZYZ2cHyux8ea7h2EoJYcq1sdq2Z",
+      "test_params": {
+        "amount": 50000000
+      },
+      "event_emitted": true,
+      "funds_transferred": true
+    }
+  }
+}

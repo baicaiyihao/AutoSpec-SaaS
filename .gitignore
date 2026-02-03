@@ -1,0 +1,263 @@
+# ============================================================================
+# Python
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ============================================================================
+# Testing
+# ============================================================================
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+*.cover
+*.py,cover
+.cache
+nosetests.xml
+coverage.xml
+*.log
+
+# ============================================================================
+# Environments
+# ============================================================================
+.env
+.env.*
+!.env.example
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ============================================================================
+# IDEs & Editors
+# ============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ============================================================================
+# macOS
+# ============================================================================
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# ============================================================================
+# Windows
+# ============================================================================
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# ============================================================================
+# Linux
+# ============================================================================
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ============================================================================
+# AutoSpec Specific - Data & Runtime
+# ============================================================================
+# 数据库
+data/autospec.db
+data/autospec.db-journal
+data/autospec.db-shm
+data/autospec.db-wal
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# 缓存和临时数据
+data/cache/
+data/projects/
+data/raw_repos/
+data/vector_store/
+data/callgraph/
+data/models/
+
+# 临时工作空间
+temp_move_project/
+workspace/
+verified_workspace/
+debug_auto_loop_history.json
+
+# 审计报告（只保留目录结构，不提交报告内容）
+reports/security_audits/*
+!reports/security_audits/.gitkeep
+reports/debug/*
+!reports/debug/.gitkeep
+
+# ============================================================================
+# AutoSpec Specific - 开发文档（不提交到 GitHub）
+# ============================================================================
+# 备份目录（所有清理的文件都在这里）
+backup/
+
+# 内部开发文档
+docs/
+AGENTS.md
+CHANGELOG*.md
+CLAUDE.md
+CLEANUP_SUMMARY.md
+GETTING_STARTED.md
+*.draft.md
+*.wip.md
+*.todo.md
+
+# 临时脚本和测试文件
+test_*.py
+test_*.js
+debug_*.py
+temp_*.py
+scratch_*.py
+*_temp.py
+*_debug.py
+*_test.py
+
+# scripts 目录（只提交部署必需脚本）
+scripts/cleanup*.sh
+scripts/update*.sh
+scripts/migrations/
+scripts/*_temp.py
+scripts/*_test.py
+
+# ============================================================================
+# AutoSpec Specific - 测试相关
+# ============================================================================
+# 旧的测试目录
+chapter_*/
+week*/
+solve_week*/
+example/
+plans/
+cetus-contracts/
+
+# Pytest
+.pytest_cache/
+pytest.ini
+
+# ============================================================================
+# Frontend (Node.js & React)
+# ============================================================================
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.cache/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Frontend env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# ============================================================================
+# Sui Move
+# ============================================================================
+# Move 编译产物
+sui-contracts/Move.lock
+sui-contracts/build/
+
+# 测试合约
+sui-contracts/build/cetus-contracts/
+
+# ============================================================================
+# Docker (SaaS 模式已不使用)
+# ============================================================================
+Dockerfile
+docker-compose.yml
+docker-compose.*.yml
+.dockerignore
+DOCKER.md
+frontend/Dockerfile
+frontend/nginx.conf
+
+# ============================================================================
+# Alembic (数据库迁移)
+# ============================================================================
+# 不忽略 alembic/versions/*.py，因为这些是迁移脚本，需要提交
+
+# ============================================================================
+# Jupyter Notebook
+# ============================================================================
+.ipynb_checkpoints
+*.ipynb
+
+# ============================================================================
+# 其他临时文件
+# ============================================================================
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+*.swp
+*.swo
+*.pid
+*.seed
+*.pid.lock
+*.gz
+
+# 压缩包
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
