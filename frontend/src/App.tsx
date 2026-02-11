@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { AuthProvider } from './contexts/AuthContext'
+import { AuthProvider, useAuth } from './contexts/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import ErrorBoundary from './components/ErrorBoundary'
 import MainLayout from './components/Layout'
@@ -23,8 +23,27 @@ import LandingSimple from './pages/LandingSimple'
 import { SuiClientProvider, WalletProvider } from '@mysten/dapp-kit'
 import { getFullnodeUrl } from '@mysten/sui/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { App as AntApp } from 'antd'
+import { App as AntApp, Spin } from 'antd'
 import '@mysten/dapp-kit/dist/index.css'
+
+// Root route handler - shows Landing for unauthenticated, redirects authenticated users to dashboard
+function RootRoute() {
+  const { isAuthenticated, isLoading } = useAuth()
+
+  if (isLoading) {
+    return (
+      <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Spin size="large" />
+      </div>
+    )
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />
+  }
+
+  return <Landing />
+}
 
 // Sui 网络配置
 const queryClient = new QueryClient()
@@ -43,32 +62,32 @@ function App() {
               <AntApp>
                 <BrowserRouter>
               <Routes>
+                {/* Root - Landing for unauthenticated, redirect to dashboard for authenticated */}
+                <Route path="/" element={<RootRoute />} />
+
                 {/* 公开路由 */}
-                <Route path="/landing" element={<Landing />} />
                 <Route path="/login" element={<LoginNew />} />
                 <Route path="/admin-login" element={<AdminLogin />} />
                 <Route path="/login-old" element={<Login />} />
 
-          {/* 受保护路由 */}
+          {/* 受保护路由 - MainLayout wrapper */}
           <Route
-            path="/"
             element={
               <ProtectedRoute>
                 <MainLayout />
               </ProtectedRoute>
             }
           >
-            <Route index element={<Navigate to="/dashboard" replace />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="projects" element={<Projects />} />
-            <Route path="projects/:id" element={<ProjectDetail />} />
-            <Route path="audits" element={<AuditList />} />
-            <Route path="audits/:id" element={<AuditExecution />} />
-            <Route path="review/:reportId" element={<Review />} />
-            <Route path="user-settings" element={<UserSettings />} />
-            <Route path="token-purchase" element={<TokenPurchase />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:id" element={<ProjectDetail />} />
+            <Route path="/audits" element={<AuditList />} />
+            <Route path="/audits/:id" element={<AuditExecution />} />
+            <Route path="/review/:reportId" element={<Review />} />
+            <Route path="/user-settings" element={<UserSettings />} />
+            <Route path="/token-purchase" element={<TokenPurchase />} />
             <Route
-              path="admin/users"
+              path="/admin/users"
               element={
                 <ProtectedRoute requireAdmin>
                   <AdminUsers />
@@ -76,7 +95,7 @@ function App() {
               }
             />
             <Route
-              path="admin/settings"
+              path="/admin/settings"
               element={
                 <ProtectedRoute requireAdmin>
                   <AdminSettings />
@@ -84,7 +103,7 @@ function App() {
               }
             />
             <Route
-              path="admin/rules"
+              path="/admin/rules"
               element={
                 <ProtectedRoute requireAdmin>
                   <AdminRules />
@@ -95,7 +114,7 @@ function App() {
 
           {/* 报告详情 - 全屏布局 */}
           <Route
-            path="reports/:id"
+            path="/reports/:id"
             element={
               <ProtectedRoute>
                 <ReportPage />

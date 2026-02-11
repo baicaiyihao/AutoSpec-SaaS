@@ -574,9 +574,17 @@ def _get_engine():
     global _engine
     if _engine is None:
         settings = get_settings()
+        # SQLite-specific optimizations for concurrent access
+        connect_args = {}
+        if settings.database_url.startswith("sqlite"):
+            connect_args = {
+                "timeout": 30,  # 增加超时时间到 30 秒
+                "check_same_thread": False,  # 允许多线程访问
+            }
         _engine = create_async_engine(
             settings.database_url,
             echo=settings.debug,
+            connect_args=connect_args,
         )
     return _engine
 
@@ -593,6 +601,19 @@ def _get_session_factory():
     return _async_session_factory
 
 
+async def _enable_wal_mode():
+    """启用 SQLite WAL 模式（提高并发性能）"""
+    settings = get_settings()
+    if settings.database_url.startswith("sqlite"):
+        engine = _get_engine()
+        async with engine.begin() as conn:
+            # 启用 WAL 模式
+            await conn.exec_driver_sql("PRAGMA journal_mode=WAL")
+            # 增加 busy_timeout
+            await conn.exec_driver_sql("PRAGMA busy_timeout=30000")
+        print("✅ SQLite WAL 模式已启用（提高并发性能）")
+
+
 async def init_db():
     """初始化数据库（创建表）
 
@@ -604,6 +625,9 @@ async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     print("✅ 数据库初始化完成（建议使用 Alembic 进行迁移管理）")
+
+    # 启用 WAL 模式
+    await _enable_wal_mode()
 
 
 async def seed_default_admin():

@@ -279,7 +279,7 @@ export default function ReportOverview({ reportId }: ReportOverviewProps) {
         <Table
           dataSource={findings}
           columns={columns}
-          rowKey="id"
+          rowKey={(record, index) => record.id || `finding-${index}`}
           pagination={{ pageSize: 10 }}
           locale={{ emptyText: '无匹配漏洞' }}
         />

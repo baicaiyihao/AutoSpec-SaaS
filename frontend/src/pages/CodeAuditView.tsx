@@ -1224,7 +1224,9 @@ export default function CodeAuditView(props: CodeAuditViewProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <Spin size="large" tip="加载中..." />
+        <Spin size="large" tip="加载中...">
+          <div style={{ minHeight: '100px' }} />
+        </Spin>
       </div>
     )
   }

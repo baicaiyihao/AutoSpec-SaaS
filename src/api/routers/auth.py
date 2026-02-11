@@ -321,7 +321,9 @@ async def refresh_access_token(req: RefreshRequest, db: AsyncSession = Depends(g
         )
 
     # 4. 检查是否过期
-    if datetime.now(timezone.utc) > db_token.expires_at:
+    # SQLite 存储的 datetime 是 timezone-naive，需要转换为 UTC
+    expires_at_utc = db_token.expires_at.replace(tzinfo=timezone.utc) if db_token.expires_at.tzinfo is None else db_token.expires_at
+    if datetime.now(timezone.utc) > expires_at_utc:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Refresh token 已过期",

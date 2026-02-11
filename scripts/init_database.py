@@ -34,6 +34,13 @@ async def init_db():
 
     print("✅ 数据库表创建完成")
 
+    # 启用 WAL 模式（提高并发性能）
+    async with engine.begin() as conn:
+        await conn.exec_driver_sql("PRAGMA journal_mode=WAL")
+        await conn.exec_driver_sql("PRAGMA busy_timeout=30000")
+
+    print("✅ SQLite WAL 模式已启用（提高并发性能）")
+
     # 创建默认管理员账号
     from src.storage.database import _get_session_factory
 
