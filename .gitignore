@@ -146,7 +146,6 @@ backup/
 docs/
 AGENTS.md
 CHANGELOG*.md
-CLAUDE.md
 CLEANUP_SUMMARY.md
 GETTING_STARTED.md
 *.draft.md
