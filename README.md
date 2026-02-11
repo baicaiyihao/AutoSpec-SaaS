@@ -115,26 +115,7 @@ Phase 4: 攻击链分析 (WhiteHat Agent - 仅 HIGH/CRITICAL)
 
 > 💡 **新手推荐**：查看 [快速上手指南](GETTING_STARTED.md)，包含详细的配置说明和 Token 使用指南。
 
-### 方式一：Docker 部署（最简单）
-
-```bash
-# 1. 克隆项目
-git clone https://github.com/yourusername/AutoSpec.git
-cd AutoSpec
-
-# 2. 配置环境变量
-cp .env.example .env
-# 编辑 .env，至少配置 DASHSCOPE_API_KEY
-
-# 3. 启动服务
-docker-compose up -d
-
-# 访问应用
-# Web UI: http://localhost
-# API 文档: http://localhost:8000/docs
-```
-
-### 方式二：一键部署脚本
+### 方式一：一键部署脚本
 
 #### Linux / macOS
 ```bash
@@ -170,7 +151,7 @@ cd frontend
 npm run dev
 ```
 
-### 方式三：手动安装
+### 方式二：手动安装
 
 #### 前置要求
 - Python 3.9+
@@ -553,7 +534,7 @@ configs = get_agent_configs("hybrid")
 ## 🗺️ 路线图
 
 ### v3.4（规划中）
-- [x] Docker 一键部署
+- [ ] Docker 一键部署
 - [ ] 审计报告对比（版本差异）
 - [ ] 批量审计（多项目并行）
 - [ ] 自定义规则编辑器（Web UI）
