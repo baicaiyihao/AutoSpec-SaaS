@@ -4,11 +4,18 @@ AutoSpec Web API 入口
 启动命令:
     uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
 """
+import os
+from pathlib import Path
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 from .config import get_settings
+
+# 前端静态文件目录
+FRONTEND_DIR = Path(__file__).parent.parent.parent / "frontend" / "dist"
 from .routers import projects, audits, reports, review, auth, users, source, rules, tokens
 from .routers import settings as settings_router
 
@@ -81,13 +88,30 @@ def create_app() -> FastAPI:
             "service": "autospec-api"
         }
 
-    @app.get("/")
-    async def root():
-        return {
-            "message": "Welcome to AutoSpec API",
-            "docs": "/docs",
-            "health": "/health"
-        }
+    # 如果前端build存在，serve静态文件
+    if FRONTEND_DIR.exists():
+        # 静态资源 (js, css, images)
+        app.mount("/assets", StaticFiles(directory=FRONTEND_DIR / "assets"), name="assets")
+
+        # SPA fallback - 所有非API路由返回index.html
+        @app.get("/{full_path:path}")
+        async def serve_spa(request: Request, full_path: str):
+            # API路由不处理
+            if full_path.startswith("api/") or full_path in ["docs", "redoc", "health", "openapi.json"]:
+                return {"detail": "Not Found"}
+
+            index_file = FRONTEND_DIR / "index.html"
+            if index_file.exists():
+                return FileResponse(index_file)
+            return {"message": "Frontend not built"}
+    else:
+        @app.get("/")
+        async def root():
+            return {
+                "message": "Welcome to AutoSpec API",
+                "docs": "/docs",
+                "health": "/health"
+            }
 
     return app
 
