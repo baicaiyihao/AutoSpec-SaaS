@@ -22,7 +22,12 @@ class Settings(BaseSettings):
     reports_dir: Path = Path("./reports/security_audits")
 
     # CORS 配置
-    cors_origins: list[str] = ["http://localhost:5173", "http://localhost:3000"]
+    cors_origins: list[str] = [
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://autospec-one.vercel.app",
+        "https://*.vercel.app",
+    ]
 
     # LLM API Keys (从环境变量读取)
     dashscope_api_key: str = ""
